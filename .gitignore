@@ -1,0 +1,10 @@
+.env
+node_modules/
+*.log
+data/
+
+# Private reference material for the real client project - never goes public
+.claude/
+PLAN.md
+PROMPT-CLASIFICARE.md
+Triaj-emailuri-Liviu.xlsx

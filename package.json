@@ -1,0 +1,21 @@
+{
+  "name": "ai-email-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered triage for a shared team inbox: reads new emails over IMAP, classifies them with Claude, and tags them by owner and urgency.",
+  "main": "src/run.js",
+  "type": "module",
+  "scripts": {
+    "seed": "node src/seedTestInbox.js",
+    "start": "node src/run.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.124.0",
+    "dotenv": "^17.4.2",
+    "imapflow": "^2.0.0",
+    "mailparser": "^3.9.23",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  }
+}

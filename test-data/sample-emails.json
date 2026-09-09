@@ -1,0 +1,164 @@
+[
+  {
+    "id": 1,
+    "from": "client-orders@example.com",
+    "subject": "Quote needed for Cluj-Constanta route",
+    "body": "Hello, could you send us a price quote for road transport from Cluj to Constanta? We'd need it for a shipment planned this week.",
+    "expected_category": "Quote request",
+    "expected_urgency": "today",
+    "note": "Concrete quote request with a route and timeframe."
+  },
+  {
+    "id": 2,
+    "from": "newlead@example.com",
+    "subject": "Pricing question",
+    "body": "Hi, what's your general rate for road freight? Just comparing a few providers right now.",
+    "expected_category": "Quote request",
+    "expected_urgency": "can wait",
+    "note": "Same category as #1, but vague and low-commitment - tests that urgency is judged from content, not just category."
+  },
+  {
+    "id": 3,
+    "from": "warehouse@example.com",
+    "subject": "5 pallets ready for pickup TODAY",
+    "body": "The 5 pallets for order #4410 are packed and ready. Truck needs to be here before 3pm today, otherwise we lose the loading slot.",
+    "expected_category": "Loading order",
+    "expected_urgency": "urgent",
+    "note": "Hard deadline today - genuinely urgent."
+  },
+  {
+    "id": 4,
+    "from": "warehouse@example.com",
+    "subject": "Cargo ready for pickup tomorrow morning",
+    "body": "Just a heads up, tomorrow morning we'll have cargo ready for pickup at dock 3. No rush, just confirm a driver whenever convenient.",
+    "expected_category": "Loading order",
+    "expected_urgency": "today",
+    "note": "Needs action today (confirm driver) but not an emergency."
+  },
+  {
+    "id": 5,
+    "from": "dispatch@example-carrier.com",
+    "subject": "Driver waiting at gate, no loading instructions",
+    "body": "Our driver has been at your gate for 40 minutes and has no loading instructions. Please advise immediately or we'll have to leave.",
+    "expected_category": "Loading order",
+    "expected_urgency": "urgent",
+    "note": "Time-critical, real cost if ignored."
+  },
+  {
+    "id": 6,
+    "from": "accounting@example-carrier.com",
+    "subject": "Please send invoice + waybill for yesterday's transport",
+    "body": "Could you send us the invoice and the waybill (CMR) for yesterday's shipment? We need it for our own accounting today.",
+    "expected_category": "Transport documents",
+    "expected_urgency": "today",
+    "note": "Clear document request, same-day need."
+  },
+  {
+    "id": 7,
+    "from": "client-orders@example.com",
+    "subject": "Delivery confirmations from last month",
+    "body": "Whenever you get a chance, could you send over the delivery confirmations from last month? Nothing urgent, just for our records.",
+    "expected_category": "Transport documents",
+    "expected_urgency": "can wait",
+    "note": "Same category as #6, explicitly low urgency."
+  },
+  {
+    "id": 8,
+    "from": "customs@example-partner.com",
+    "subject": "URGENT - customs needs the CMR to release the shipment",
+    "body": "Customs is holding the shipment at the border and needs the CMR document right now to release it. Every hour of delay costs storage fees.",
+    "expected_category": "Transport documents",
+    "expected_urgency": "urgent",
+    "note": "Same category as #6/#7, but time-critical - tests urgency judgment within one category across the full range."
+  },
+  {
+    "id": 9,
+    "from": "client-orders@example.com",
+    "subject": "Where is my shipment? Client is waiting at the dock",
+    "body": "Our client has been waiting at the dock for over an hour. Can you tell us exactly where the truck is right now?",
+    "expected_category": "Delivery status",
+    "expected_urgency": "urgent",
+    "note": "Active complaint-adjacent status request, real-time pressure."
+  },
+  {
+    "id": 10,
+    "from": "client-orders@example.com",
+    "subject": "Any update on order #4521?",
+    "body": "Just checking in - any update on the estimated delivery time for order #4521? No rush, just want to plan our week.",
+    "expected_category": "Delivery status",
+    "expected_urgency": "today",
+    "note": "Routine status check, no real pressure despite being a question."
+  },
+  {
+    "id": 11,
+    "from": "client-orders@example.com",
+    "subject": "Goods arrived damaged",
+    "body": "We just opened the shipment and several boxes are visibly damaged - looks like water damage. We need this resolved urgently, the client is furious.",
+    "expected_category": "Complaint",
+    "expected_urgency": "urgent",
+    "note": "Textbook urgent complaint, should escalate straight to Manager."
+  },
+  {
+    "id": 12,
+    "from": "client-orders@example.com",
+    "subject": "Missing items in delivery",
+    "body": "We counted the delivery and 3 items are missing from what was on the invoice. Please look into this as soon as possible.",
+    "expected_category": "Complaint",
+    "expected_urgency": "urgent",
+    "note": "Second complaint example, different wording, still urgent."
+  },
+  {
+    "id": 13,
+    "from": "vendor-newsletter@example-vendor.com",
+    "subject": "New fuel surcharge rates for next quarter",
+    "body": "Dear partner, please find attached our updated fuel surcharge table effective next quarter. No action needed on your part.",
+    "expected_category": "Other / unclear",
+    "expected_urgency": "can wait",
+    "note": "Informational, not from a client, no action needed - fallback to Manager, low urgency."
+  },
+  {
+    "id": 14,
+    "from": "unknown-sender@example.com",
+    "subject": "Question about your services",
+    "body": "Hello, I saw your company online. Do you also handle international shipments, or only domestic?",
+    "expected_category": "Other / unclear",
+    "expected_urgency": "can wait",
+    "note": "General inquiry, doesn't map cleanly to any operational category."
+  },
+  {
+    "id": 15,
+    "from": "client-orders@example.com",
+    "subject": "Can you also give me a price while you're at it?",
+    "body": "Following up on our shipment from Tuesday (order #4398) - also, could you give me a rough price for a similar route next month?",
+    "expected_category": "Quote request",
+    "expected_urgency": "today",
+    "note": "Mixed intent (status + quote) - tests whether the model picks the dominant/actionable request."
+  },
+  {
+    "id": 16,
+    "from": "dispatch@example-carrier.com",
+    "subject": "GPS shows truck stopped for 2 hours, is everything ok?",
+    "body": "We noticed the truck for order #4521 has been stationary for 2 hours according to GPS. Can you check if everything is fine with the driver?",
+    "expected_category": "Delivery status",
+    "expected_urgency": "urgent",
+    "note": "Operational alert dressed as a status question - should read as urgent."
+  },
+  {
+    "id": 17,
+    "from": "warehouse@example.com",
+    "subject": "Small correction to yesterday's loading order",
+    "body": "Small note: yesterday's loading order should have said 4 pallets, not 5. No need to act on this, just correcting the record.",
+    "expected_category": "Loading order",
+    "expected_urgency": "can wait",
+    "note": "Same category as urgent loading examples, but explicitly no action needed - tests that category != automatic urgency."
+  },
+  {
+    "id": 18,
+    "from": "client-orders@example.com",
+    "subject": "Not happy with how the last shipment was handled",
+    "body": "Overall we were not happy with how the last shipment was handled - communication was slow. We'd like to discuss this when convenient, no immediate crisis.",
+    "expected_category": "Complaint",
+    "expected_urgency": "today",
+    "note": "Complaint but explicitly not an emergency - tests that even 'Complaint' category isn't automatically 'urgent'."
+  }
+]

@@ -58,6 +58,23 @@ Two more obvious-looking options were considered and set aside, for concrete rea
 - The script doesn't depend on Thunderbird being open at all; Thunderbird (or any IMAP client) is just how a human happens to view the result.
 - It can run unattended, on a schedule (e.g. via Task Scheduler / cron), rather than needing a desktop app running in the foreground.
 
+## Why the routing rules are written by the team, not inferred by watching them work
+
+The obvious shortcut here: skip the spreadsheet, connect Claude to the mailbox for a week, and have it learn the routing rules on its own - who handles what, and how urgent each type of request really is - just from watching who replied, how fast, and what they wrote. No spreadsheet to fill in, no upfront work for the team.
+
+It falls apart once you look at what "watching" a shared inbox can actually see. In a real team inbox, people don't reply from the shared address - they reply from their own, keeping the shared/manager address in CC. That's the only reason a reply is visible to something polling the shared inbox at all, and even then the visibility is partial:
+
+- **A reply with no CC is invisible.** Someone forgets to CC the group under pressure - which happens exactly when things are urgent - and that resolution leaves no trace for the AI to learn from, even though it happened.
+- **A phone call or a hallway conversation leaves no trace at all.** A human logging the outcome by hand knows "this got resolved by phone"; an AI reading the mailbox has nothing to read.
+- **A handoff between colleagues is ambiguous.** If person A replies first and forwards it to a specialist, the thread shows both actions, but "who actually owns this category" isn't something you can safely derive from that - a human just states it.
+- **Reply speed isn't the same as urgency**, which is the one thing this project cares about most. Someone can reply fast to something trivial out of politeness, or slowly to something urgent because they were in a meeting. Learning urgency from response latency means learning noise dressed up as signal.
+
+Worse, this project exists *because* the team's existing habits were already losing urgent emails in routine traffic. An approach that learns its rules from a week of that same behavior risks re-encoding the exact problem it's meant to fix, instead of fixing it.
+
+The spreadsheet has none of these problems: a category, a priority, and an owner are facts the team already knows, stated directly instead of guessed at from a noisy proxy. It's also the cheaper option - reading a static file once per run, versus classifying a week of live traffic before the tool has triaged a single real email.
+
+The one part of the "watch and learn" idea worth keeping: using a short observation period to **pre-fill a draft** spreadsheet - suggested categories and owners for the manager to review and correct in fifteen minutes - rather than starting from a blank file. That keeps the spreadsheet as the actual source of truth, while cutting the effort of writing it from scratch.
+
 ## Setup
 
 ```bash
